@@ -2,11 +2,21 @@ import mongoose from "mongoose";
 import express from "express"
 import dotenv from "dotenv"
 import connectDB from "./db/connection.js";
-// const app = express()
 
 dotenv.config({
     path : "./.env"
 })
-console.log("🔍 Loaded MONGO_URI:", process.env.DATABASE_URL);
+const app = express()
+const port = process.env.PORT || 3000
 
 connectDB()
+.then(() => {
+    app.listen(port , () => {
+        console.log(`Server is live on port ${port}`);
+    })
+    
+})
+.catch((err) => {
+    console.log("MONGO FAILED TO CONNECT" , err);
+    
+})
