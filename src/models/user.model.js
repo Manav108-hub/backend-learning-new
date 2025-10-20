@@ -26,11 +26,11 @@ const userSchema = new mongoose.Schema(
       index: true,
     },
     avatar: {
-      type: true,
+      type: String,
       required: true,
     },
     coverImage: {
-      type: true,
+      type: String,
     },
     watchHistory: {
       type: mongoose.Schema.Types.ObjectId,
@@ -59,7 +59,7 @@ userSchema.pre("save", async function () {
 
 // now injecting a method for checking the password
 
-userSchema.methods.isPassword = async function (password) {
+userSchema.methods.isPasswordCompare = async function (password) {
     return await bcrypt.compare(password , this.password)
 }
 
@@ -94,4 +94,5 @@ userSchema.methods.generateRefreshToken = function (){
 )
 }
 
-export default User = mongoose.Model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+export default User
